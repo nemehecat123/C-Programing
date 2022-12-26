@@ -5,11 +5,12 @@
 const int MAX_NADSTROPIJ = 10;
 const int MAX_STRING_LENGHT = 3;
 
-void mainMenu(int nadstropje);
+
+void TakeInput(char nadstropja[][MAX_STRING_LENGHT],char trenutnoNadstropje[]);
+void AvailableFloors(char nadstropja[][MAX_STRING_LENGHT],char trenutnoNadstropje[]);
 
 int main() {
-    
-   
+
     char nadstropja[9][3]={
                    "-3",
                    "-2",
@@ -21,43 +22,49 @@ int main() {
                    "4",
                    "5"
                  };             
+    char trenutnoNadstropje[3]="P"; // to bo nadstropje , ki se bo spreminjalo, odvisno kje je oseba
+    char iskanoNadstropje[MAX_STRING_LENGHT]; // to bo nadstropje ki ga bo uporabnik vpisal
+    *trenutnoNadstropje="P";
+
+    AvailableFloors(nadstropja,trenutnoNadstropje);
 
 
-
-    
-
-    char iskanoNadstropje[MAX_STRING_LENGHT];
-
-
-
-
+    TakeInput(nadstropja,trenutnoNadstropje);
 
    char str2[] = {"-3"};
-   if (strcmp(nadstropja[0],str2)==0)
-   {
-    printf("okej to dela ");
-   }
-   
 
 
-    //mainMenu(3);
 
 }
 
-void mainMenu(int nadstropje){
 
-    char input[2];
-     
-    printf("Insert <number> to go to that floor. \n %s",input);
+void TakeInput(char nadstropja[][MAX_STRING_LENGHT],char trenutnoNadstropje[]){
+
+    char input[MAX_STRING_LENGHT];
+
+    printf("You are currently on the %s flor. \n ",trenutnoNadstropje); 
+    printf("Insert <number/P> to go to that floor. \n ");
     printf(" Or press [enter] to exit the floor.\n");
 
    fgets(input,sizeof(input),stdin);
     int selected_index;
 
    if (sscanf(input, "%i", &selected_index) == 1) {
-        mainMenu(nadstropje);
+    trenutnoNadstropje=input;
+    AvailableFloors(nadstropja,trenutnoNadstropje);
+    TakeInput(nadstropja,trenutnoNadstropje);
     }
-
 }
 
+void AvailableFloors(char nadstropja[][MAX_STRING_LENGHT],char trenutnoNadstropje[]){
+    printf("Available floors : \n");
+    for (int i = 0; i < 9; i++)
+    {
+        if (strcmp(nadstropja[i],trenutnoNadstropje)!=0)
+        {
+            printf("%s\n",nadstropja[i]);
+        }
+    }
+    
+}
 
