@@ -36,7 +36,6 @@ void mainMenu(int nadstropje){
         mainMenu(nadstropje);
     }
     
-  
     
     
 }
