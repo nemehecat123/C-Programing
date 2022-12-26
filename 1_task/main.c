@@ -3,22 +3,44 @@
 #include <stdlib.h>
 
 const int MAX_NADSTROPIJ = 10;
+const int MAX_STRING_LENGHT = 3;
 
 void mainMenu(int nadstropje);
 
 int main() {
+    
+   
+    char nadstropja[9][3]={
+                   "-3",
+                   "-2",
+                   "-1",
+                   "P",
+                   "1",
+                   "2",
+                   "3",
+                   "4",
+                   "5"
+                 };             
 
-    char line[2] = "0";
-    int x = atoi(line);
 
-    if (atoi(line)==0)
-    {
-    printf(" to je moja cifra v tem stringu %d\n",x);
-        
-    }
+
     
 
-    mainMenu(3);
+    char iskanoNadstropje[MAX_STRING_LENGHT];
+
+
+
+
+
+   char str2[] = {"-3"};
+   if (strcmp(nadstropja[0],str2)==0)
+   {
+    printf("okej to dela ");
+   }
+   
+
+
+    //mainMenu(3);
 
 }
 
@@ -35,7 +57,7 @@ void mainMenu(int nadstropje){
    if (sscanf(input, "%i", &selected_index) == 1) {
         mainMenu(nadstropje);
     }
-    
-    
-    
+
 }
+
+
