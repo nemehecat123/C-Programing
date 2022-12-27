@@ -6,8 +6,8 @@ const int MAX_NADSTROPIJ = 10;
 const int MAX_STRING_LENGHT = 3;
 
 
-void TakeInput(char nadstropja[][MAX_STRING_LENGHT],char trenutnoNadstropje[]);
-void AvailableFloors(char nadstropja[][MAX_STRING_LENGHT],char trenutnoNadstropje[]);
+void TakeInput(char nadstropja[][MAX_STRING_LENGHT],char *trenutnoNadstropje[]);
+void AvailableFloors(char nadstropja[][MAX_STRING_LENGHT],char *trenutnoNadstropje[]);
 
 int main() {
 
@@ -23,22 +23,23 @@ int main() {
                    "5"
                  };             
     char trenutnoNadstropje[3]="P"; // to bo nadstropje , ki se bo spreminjalo, odvisno kje je oseba
+    char *ptr = trenutnoNadstropje;
     char iskanoNadstropje[MAX_STRING_LENGHT]; // to bo nadstropje ki ga bo uporabnik vpisal
-    *trenutnoNadstropje="P";
 
-    AvailableFloors(nadstropja,trenutnoNadstropje);
+    
+    AvailableFloors(nadstropja,&ptr);
+    ptr = "P";
 
 
-    TakeInput(nadstropja,trenutnoNadstropje);
 
-   char str2[] = {"-3"};
+
 
 
 
 }
 
 
-void TakeInput(char nadstropja[][MAX_STRING_LENGHT],char trenutnoNadstropje[]){
+void TakeInput(char nadstropja[][MAX_STRING_LENGHT],char *trenutnoNadstropje[]){
 
     char input[MAX_STRING_LENGHT];
 
@@ -49,22 +50,27 @@ void TakeInput(char nadstropja[][MAX_STRING_LENGHT],char trenutnoNadstropje[]){
    fgets(input,sizeof(input),stdin);
     int selected_index;
 
-   if (sscanf(input, "%i", &selected_index) == 1) {
-    trenutnoNadstropje=input;
+   if (sscanf(input, "%s", &selected_index) == 1) {
+   *trenutnoNadstropje=input;
     AvailableFloors(nadstropja,trenutnoNadstropje);
     TakeInput(nadstropja,trenutnoNadstropje);
     }
 }
 
-void AvailableFloors(char nadstropja[][MAX_STRING_LENGHT],char trenutnoNadstropje[]){
+void AvailableFloors(char nadstropja[][MAX_STRING_LENGHT],char *trenutnoNadstropje[]){
+   
+    
     printf("Available floors : \n");
     for (int i = 0; i < 9; i++)
     {
-        if (strcmp(nadstropja[i],trenutnoNadstropje)!=0)
+        if (strcmp(nadstropja[i],*trenutnoNadstropje)!=0)
         {
             printf("%s\n",nadstropja[i]);
         }
     }
+
+    printf("%p",&trenutnoNadstropje);
+
     
 }
 
