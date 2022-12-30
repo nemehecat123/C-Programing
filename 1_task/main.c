@@ -1,17 +1,19 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
-const int MAX_NADSTROPIJ = 10;
-const int MAX_STRING_LENGHT = 3;
+#define MAX_NADSTROPIJ 10
+#define MAX_STRING_LENGHT 5
 
 
-void TakeInput(char nadstropja[][MAX_STRING_LENGHT],char *trenutnoNadstropje[]);
+void TakeInput(char nadstropja[][MAX_STRING_LENGHT],char* trenutnoNadstropje[]);
 void AvailableFloors(char nadstropja[][MAX_STRING_LENGHT],char *trenutnoNadstropje[]);
 
 int main() {
 
-    char nadstropja[9][3]={
+
+    char nadstropja[10][5]={
                    "-3",
                    "-2",
                    "-1",
@@ -21,56 +23,58 @@ int main() {
                    "3",
                    "4",
                    "5"
-                 };             
-    char trenutnoNadstropje[3]="P"; // to bo nadstropje , ki se bo spreminjalo, odvisno kje je oseba
+                 };
+    char trenutnoNadstropje[5]="P"; // to bo nadstropje , ki se bo spreminjalo, odvisno kje je oseba
     char *ptr = trenutnoNadstropje;
     char iskanoNadstropje[MAX_STRING_LENGHT]; // to bo nadstropje ki ga bo uporabnik vpisal
 
-    
-    AvailableFloors(nadstropja,&ptr);
-    ptr = "P";
+        AvailableFloors(nadstropja,&ptr);
 
 
+        TakeInput(nadstropja,&ptr);
 
-
-
-
-
+        AvailableFloors(nadstropja,&ptr);
 }
 
 
-void TakeInput(char nadstropja[][MAX_STRING_LENGHT],char *trenutnoNadstropje[]){
+void TakeInput(char nadstropja[][MAX_STRING_LENGHT],char* trenutnoNadstropje[]){
 
     char input[MAX_STRING_LENGHT];
 
-    printf("You are currently on the %s flor. \n ",trenutnoNadstropje); 
-    printf("Insert <number/P> to go to that floor. \n ");
-    printf(" Or press [enter] to exit the floor.\n");
+    
+
 
    fgets(input,sizeof(input),stdin);
-    int selected_index;
-
-   if (sscanf(input, "%s", &selected_index) == 1) {
-   *trenutnoNadstropje=input;
-    AvailableFloors(nadstropja,trenutnoNadstropje);
-    TakeInput(nadstropja,trenutnoNadstropje);
-    }
-}
-
-void AvailableFloors(char nadstropja[][MAX_STRING_LENGHT],char *trenutnoNadstropje[]){
-   
+    char selectedIndex[MAX_STRING_LENGHT];
     
-    printf("Available floors : \n");
-    for (int i = 0; i < 9; i++)
-    {
-        if (strcmp(nadstropja[i],*trenutnoNadstropje)!=0)
-        {
-            printf("%s\n",nadstropja[i]);
+    bool FalseInput = false;
+   for (int i = 0; i < 9; i++) {
+        if (strcmp(nadstropja[i], *trenutnoNadstropje) != 0) {
+            FalseInput=true;
         }
     }
-
-    printf("%p",&trenutnoNadstropje);
-
+    if (FalseInput== true)
+    {
+        printf("Vnešeno nadstropje ne obstaja\n prosim poskusi še enkrat ali pa iztopi iz dvigala\n");
+        AvailableFloors(nadstropja,trenutnoNadstropje);
+        TakeInput(nadstropja,trenutnoNadstropje);
+    }
+    
+    
+    *trenutnoNadstropje = selectedIndex;
+    printf("trenutno nadstropje je %s \n", *trenutnoNadstropje);
+    AvailableFloors(nadstropja,trenutnoNadstropje);
+    TakeInput(nadstropja,trenutnoNadstropje);
     
 }
+}
 
+void AvailableFloors(char nadstropja[][MAX_STRING_LENGHT], char *trenutnoNadstropje[]) {
+    printf("Available floors : \n");
+
+    for (int i = 0; i < 9; i++) {
+        if (strcmp(nadstropja[i], *trenutnoNadstropje) != 0) {
+            printf("%s \n", nadstropja[i]);
+        }
+    }
+}
