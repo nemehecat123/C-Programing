@@ -6,7 +6,7 @@
 
 void drawHangman(int *chances);
 void choseLetter(char *chosenLetter, int *countTries, char GuessedLetters[]);
-bool checkLetterIfInWord(char *, char chosenWord[]);
+bool checkLetterIfInWord(char *, char chosenWord[], int *chances);
 void printWord(char chosenWord[], char *chosenLetter, char hiddenChosenWord[]);
 
 int main()
@@ -55,32 +55,36 @@ int main()
 
     // letter that will be chosen and will latter change
     char chosenLetter[5] = "";
-    int a = 0;
+    printWord(chosenWord, chosenLetter,hiddenChosenWord);
+    drawHangman(&chances);
 
-    while (a != 4)
+
+    while (chances!=0)
     {
         choseLetter(chosenLetter, &countTries, GuessedLetters); // chosen letter se bo spremenu,,,count tries bo sou gor plus 1 in guessed letter se bo dodala crka ku si jo uganu
-        a = a + 1;
-        if (checkLetterIfInWord(chosenLetter, chosenWord)) // vrne true ce je chosen letter v besedi ki je bla dolocena random
+        if (checkLetterIfInWord(chosenLetter, chosenWord,&chances)) // vrne true ce je chosen letter v besedi ki je bla dolocena random
         {
-            printf("crka je v stavku \n");
+            printWord(chosenWord, chosenLetter,hiddenChosenWord);  
+              
         }
         else
         {
-            printf("crka ni v stavku \n");
+            printf("chances %i",chances);
         }
     printWord(chosenWord, chosenLetter,hiddenChosenWord);
 
+    printf("guesed letters are :  %s\n", GuessedLetters);
+    drawHangman(&chances);
+
     }
 
-    printf("chosen letter je : %s\n", chosenLetter);
-    printf("guesed chars in main :  %s\n", GuessedLetters);
 
     return 0;
 }
 
 void printWord(char HiddenWord[], char *chosenLetter, char hiddenChosenWord[])
 {
+
 
     for (int i = 0; i < strlen(hiddenChosenWord); i++)
     {
@@ -89,7 +93,22 @@ void printWord(char HiddenWord[], char *chosenLetter, char hiddenChosenWord[])
             hiddenChosenWord[i]=*chosenLetter;
         }
     }
-    printf(" to je tvoja beseda al neki :  %s \n",hiddenChosenWord);
+    printf(" Your word is : %s \n",hiddenChosenWord);
+    bool konecIgre=true; // predpostavi da je ugotovil use crke
+    for (int i = 0; i < strlen(hiddenChosenWord); i++) //  poglej ce je  uganu use crke... ce ni  je konecIgre false
+    {
+        if (hiddenChosenWord[i]=='_')
+        {
+            konecIgre=false;
+        }
+        
+    }
+    if(konecIgre==true){
+            printf("bravo zmagou si");
+            
+            exit(0);
+        }
+    
 }
 
 // Function definition
@@ -103,17 +122,14 @@ void choseLetter(char *chosenLetter, int *countTries, char GuessedLetters[])
 
     if (sscanf(input, "%s", &selectedIndex) == 1) // pogleda če ni kliknjen enter
     {
-        printf("zbral si crko %s\n", selectedIndex);
         strcpy(chosenLetter, selectedIndex);
-
     }
     GuessedLetters[*countTries] = selectedIndex[0];
-    printf("guesed char :  %c\n", GuessedLetters[*countTries]);
     // increment number of tries he tried
     *countTries = *countTries + 1;
 }
 
-bool checkLetterIfInWord(char *chosenLetter, char chosenWord[])
+bool checkLetterIfInWord(char *chosenLetter, char chosenWord[], int* chances)
 {
 
     for (int i = 0; i < 20; i++)
@@ -123,20 +139,32 @@ bool checkLetterIfInWord(char *chosenLetter, char chosenWord[])
             return true;
         }
     }
+    *chances= *chances-1;
     return false;
 }
 
 void drawHangman(int *chances)
 {
-    if (*chances == 6)
+    if (*chances == 7)
+    {
+        printf(" _______\n");
+        printf(" |/   | \n");
+        printf(" |      \n");
+        printf(" |      \n");
+        printf(" |  _____  \n");
+        printf(" | |     | \n");
+        printf(" | |     | \n");
+        printf("_|_|     |\n");
+    }else if (*chances == 6)
     {
         printf(" _______\n");
         printf(" |/   | \n");
         printf(" |    O \n");
         printf(" |      \n");
-        printf(" |      \n");
-        printf(" |      \n");
-        printf("_|___   \n");
+        printf(" |  _____  \n");
+        printf(" | |     | \n");
+        printf(" | |     | \n");
+        printf("_|_|     |\n");
     }
     else if (*chances == 5)
     {
@@ -144,9 +172,10 @@ void drawHangman(int *chances)
         printf(" |/   | \n");
         printf(" |    O \n");
         printf(" |    | \n");
-        printf(" |      \n");
-        printf(" |      \n");
-        printf("_|___   \n");
+        printf(" |  _____  \n");
+        printf(" | |     | \n");
+        printf(" | |     | \n");
+        printf("_|_|     |\n");
     }
     else if (*chances == 4)
     {
@@ -154,9 +183,10 @@ void drawHangman(int *chances)
         printf(" |/   | \n");
         printf(" |    O \n");
         printf(" |   /| \n");
-        printf(" |      \n");
-        printf(" |      \n");
-        printf("_|___   \n");
+        printf(" |  _____  \n");
+        printf(" | |     | \n");
+        printf(" | |     | \n");
+        printf("_|_|     |\n");
     }
     else if (*chances == 3)
     {
@@ -164,9 +194,10 @@ void drawHangman(int *chances)
         printf(" |/   | \n");
         printf(" |    O \n");
         printf(" |   /|\\ \n");
-        printf(" |      \n");
-        printf(" |      \n");
-        printf("_|___   \n");
+        printf(" |  _____  \n");
+        printf(" | |     | \n");
+        printf(" | |     | \n");
+        printf("_|_|     |\n");
     }
     else if (*chances == 2)
     {
@@ -174,9 +205,10 @@ void drawHangman(int *chances)
         printf(" |/   | \n");
         printf(" |    O \n");
         printf(" |   /|\\ \n");
-        printf(" |   /   \n");
-        printf(" |      \n");
-        printf("_|___   \n");
+        printf(" |  _/___\n");
+        printf(" | |     | \n");
+        printf(" | |     | \n");
+        printf("_|_|     |\n");
     }
     else if (*chances == 1)
     {
@@ -184,18 +216,21 @@ void drawHangman(int *chances)
         printf(" |/   | \n");
         printf(" |    O \n");
         printf(" |   /|\\ \n");
-        printf(" |   / \\ \n");
-        printf(" |      \n");
-        printf("_|___   \n");
+        printf(" |  _/_\\_ \n");
+        printf(" | |      | \n");
+        printf(" | |      | \n");
+        printf("_|_|      |\n");
     }
     else if (*chances == 0)
     {
         printf(" _______\n");
         printf(" |/   | \n");
-        printf(" |/   | \n");
+        printf(" |    | \n");
         printf(" |    O \n");
         printf(" |   /|\\ \t \t hihi hanged \n");
-        printf(" |   / \\ \n");
-        printf("_|___   \n");
+        printf(" | | / \\ |\n");
+        printf(" | |    /| \n");
+        printf("_|_|   / |\n");
     }
 }
+
