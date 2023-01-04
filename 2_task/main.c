@@ -15,17 +15,33 @@ int main()
     srand(time(0));
 
     // Generate a random number from 0 to 7
-    int rand_num = rand() % 8;
+    int rand_num = rand() % 24;
 
     // random words to chose from
-    char words[7][20] = {
+    char words[23][20] = {
         "banana",
         "letalo",
         "kapa",
         "parfum",
         "skleda",
         "medalja",
-        "skodelica"};
+        "skodelica",
+        "brat",
+        "skatla",
+        "zvezek",
+        "razglednica",
+        "polnilec",
+        "printer",
+        "svetilka",
+        "slika",
+        "peresnica",
+        "omara",
+        "gibanica",
+        "klobasa",
+        "sarma",
+        "kruh",
+        "vilica",
+        "jabolko"};
     char chosenWord[20];
 
     char hiddenChosenWord[20];
@@ -69,7 +85,7 @@ int main()
         }
         else
         {
-            printf("chances %i",chances);
+            printf("That letter is not in the word\n chances left  %i\n",chances);
         }
     printWord(chosenWord, chosenLetter,hiddenChosenWord);
 
